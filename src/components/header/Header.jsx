@@ -11,24 +11,24 @@ function Header() {
           mx-auto
           grid
           h-20
-          max-w-[1350px]
+          max-w-337.5
           grid-cols-[1fr_500px_1fr]
           items-center
           px-6
         "
       >
-        {/* Left */}
+        
         <div className="justify-self-start">
           <Title />
         </div>
 
-        {/* Center */}
+        
         <div className="w-full">
           <Input />
         </div>
 
-        {/* Right */}
-        <div className="flex items-center gap-5 justify-self-end">
+        
+        <div className="flex items-center gap-7 justify-self-end">
           <Shop />
           <Login />
         </div>

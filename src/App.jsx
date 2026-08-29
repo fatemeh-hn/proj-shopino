@@ -1,5 +1,5 @@
 import Header from "./components/header/Header";
-import Card from "./components/card/Card";
+import CardState from "./components/card/CardState";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         "
       >
         <Header />
-        <Card />
+        <CardState />
       </main>
     </div>
   );
