@@ -6,6 +6,7 @@ import Login from "./Login";
 function Header() {
   return (
     <header className="border-b border-gray-200 bg-white">
+      
       <div
         className="
           mx-auto

@@ -1,6 +1,7 @@
 import Header from "./components/header/Header";
 import CardState from "./components/card/CardState";
 
+
 function App() {
   return (
     <div className="min-h-screen bg-gray-100 p-3">
