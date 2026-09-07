@@ -4,17 +4,20 @@ import getProduct from "../../api/card";
 
 function CardState() {
   const [product, setProduct] = useState(null);
+  const [loading,setLoading] = useState(true)
+
   useEffect(() => {
     const fetchProduct = async () => {
       const data = await getProduct();
       setProduct(data.products);
+      setLoading(false)
     };
 
     fetchProduct();
   }, []);
 
-  if (!product) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <p className="text-center">Loading... .please wait</p>;
   }
   return (
     <section className="mx-auto w-full max-w-300 p-5">
