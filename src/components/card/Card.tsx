@@ -1,7 +1,9 @@
 import { Heart } from "lucide-react";
 import { Button } from "./Button";
+import {CardProps} from "../../utilities/types/productTypes"
 
-export function Card({ product }) {
+
+export function Card({ product}:Readonly<CardProps>) {
   const stockColor =
     product.availabilityStatus === "Low Stock"
       ? "text-red-500"

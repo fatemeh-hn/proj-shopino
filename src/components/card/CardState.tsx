@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import getProduct from "../../api/card";
 import { Snackbar, Slider, Box } from "@mui/material";
 import { SlidersHorizontal } from "lucide-react";
+import {Product} from "../../utilities/types/productTypes"
+
 
 function CardState() {
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
@@ -14,9 +16,13 @@ function CardState() {
     const fetchProduct = async () => {
       try {
         const data = await getProduct();
-        setProduct(data.products);
+        setProducts(data.products);
       } catch (err) {
+        if (err instanceof Error) {
         setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
       } finally {
         setLoading(false);
       }
@@ -73,14 +79,14 @@ function CardState() {
           <div className="mb-5 flex items-center gap-2">
             <h2 className="text-xl font-bold text-black">All Products</h2>
 
-            <p className="text-sm text-gray-400">{product.length} items</p>
+            <p className="text-sm text-gray-400">{products.length} items</p>
           </div>
 
           <div className="flex flex-wrap gap-4">
-            {product?.length === 0 ? (
+            {products?.length === 0 ? (
               <p>No product added</p>
             ) : (
-              product.map((product) => (
+              products.map((product) => (
                 <Card key={product.id} product={product} />
               ))
             )}
