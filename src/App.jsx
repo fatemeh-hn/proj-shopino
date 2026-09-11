@@ -1,4 +1,4 @@
-import Header from "./components/header/Header";
+import Header from "./components/card/Header";
 import CardState from "./components/card/CardState";
 
 

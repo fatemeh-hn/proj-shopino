@@ -1,7 +1,8 @@
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import getProduct from "../../api/card";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Slider, Box } from "@mui/material";
+import { SlidersHorizontal } from "lucide-react";
 
 function CardState() {
   const [product, setProduct] = useState([]);
@@ -38,7 +39,7 @@ function CardState() {
     return <p className="text-center">Loading... .please wait</p>;
   }
   return (
-    <section className="mx-auto w-full max-w-300 p-5">
+    <section className="mx-auto w-full max-w-337.5 p-5">
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
@@ -52,20 +53,20 @@ function CardState() {
         }}
       />
 
-      <div className="flex gap-6">
+      <div className="flex gap-8">
         {/* Filters */}
-        <aside className="w-60 shrink-0">
-          <h3 className="mb-4 font-bold">Filters</h3>
+        <aside className="w-60 shrink-0 self-start rounded-2xl border border-gray-200 p-1.5">
+          <div className="p-3 flex justify-between">
+            <h3 className="mb-4 font-bold">Filters</h3>
+            <SlidersHorizontal />
+          </div>
 
-          <label className="flex gap-2">
-            <input type="checkbox" />
-            Watches
-          </label>
-
-          <label className="mt-2 flex gap-2">
-            <input type="checkbox" />
-            Shoes
-          </label>
+          <Box sx={{ px: 2 }}>
+            <Slider
+              getAriaLabel={() => "price range"}
+              valueLabelDisplay="auto"
+            />
+          </Box>
         </aside>
 
         <div className="flex-1">

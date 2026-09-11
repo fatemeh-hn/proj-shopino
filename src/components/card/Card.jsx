@@ -1,18 +1,19 @@
 import { Heart } from "lucide-react";
 import { Button } from "./Button";
 
-
-export function Card({product}) {
-  
+export function Card({ product }) {
+  const stockColor =
+    product.availabilityStatus === "Low Stock"
+      ? "text-red-500"
+      : "text-green-500";
 
   return (
-    <div className="w-64 overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
       <div className="relative flex h-52 items-center justify-center bg-gray-100 p-4">
         <img
           src={product.images[0]}
           alt={product.title}
           className="h-full w-full object-contain"
-          
         />
 
         <button
@@ -35,18 +36,18 @@ export function Card({product}) {
         </button>
       </div>
 
-      <div className="p-4">
+      <div className="flex flex-1 flex-col p-4">
         <h2 className="text-base font-bold text-gray-900">{product.title}</h2>
 
         <h3 className="mt-1 text-base font-bold text-gray-900">
           ${product.price}
         </h3>
 
-        <p className="mt-1 text-base font-bold text-green-500">
+        <p className={`mt-1 text-base font-bold ${stockColor}`}>
           {product.availabilityStatus}
         </p>
 
-        <div className="mt-3">
+        <div className="mt-auto pt-3">
           <Button />
         </div>
       </div>
