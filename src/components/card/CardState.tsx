@@ -1,9 +1,9 @@
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import getProduct from "../../api/card";
-import { Snackbar, Slider, Box } from "@mui/material";
-import { SlidersHorizontal } from "lucide-react";
 import {Product} from "../../utilities/types/productTypes"
+import { Snackbar } from "@mui/material";
+import Filters from "./Filters";
 
 
 function CardState() {
@@ -60,20 +60,8 @@ function CardState() {
       />
 
       <div className="flex gap-8">
-        {/* Filters */}
-        <aside className="w-60 shrink-0 self-start rounded-2xl border border-gray-200 p-1.5">
-          <div className="p-3 flex justify-between">
-            <h3 className="mb-4 font-bold">Filters</h3>
-            <SlidersHorizontal />
-          </div>
-
-          <Box sx={{ px: 2 }}>
-            <Slider
-              getAriaLabel={() => "price range"}
-              valueLabelDisplay="auto"
-            />
-          </Box>
-        </aside>
+        
+        <Filters/>
 
         <div className="flex-1">
           <div className="mb-5 flex items-center gap-2">
