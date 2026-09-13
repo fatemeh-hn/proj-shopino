@@ -1,16 +1,16 @@
 import Card from "./Card";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import getProduct from "../../api/card";
-import {Product} from "../../utilities/types/productTypes"
+import { Product } from "../../utilities/types/productTypes";
 import { Snackbar } from "@mui/material";
 import Filters from "./Filters";
-
 
 function CardState() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -19,10 +19,10 @@ function CardState() {
         setProducts(data.products);
       } catch (err) {
         if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Something went wrong");
-      }
+          setError(err.message);
+        } else {
+          setError("Something went wrong");
+        }
       } finally {
         setLoading(false);
       }
@@ -30,6 +30,14 @@ function CardState() {
 
     fetchProduct();
   }, []);
+
+  const categories = [...new Set(products?.map((product) => product.category))];
+  const filteredData = useMemo(() => {
+    return products?.filter(
+      (product) =>
+        selectedCategory === "All" || product.category === selectedCategory,
+    );
+  }, [products, selectedCategory]);
 
   useEffect(() => {
     if (error) {
@@ -60,8 +68,11 @@ function CardState() {
       />
 
       <div className="flex gap-8">
-        
-        <Filters/>
+        <Filters
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
 
         <div className="flex-1">
           <div className="mb-5 flex items-center gap-2">
@@ -74,7 +85,7 @@ function CardState() {
             {products?.length === 0 ? (
               <p>No product added</p>
             ) : (
-              products.map((product) => (
+              filteredData.map((product) => (
                 <Card key={product.id} product={product} />
               ))
             )}

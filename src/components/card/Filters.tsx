@@ -1,8 +1,24 @@
-import React from "react";
-import { Slider, Box, Button, Checkbox, FormGroup, FormControlLabel } from "@mui/material";
+import {
+  Slider,
+  Box,
+  Button,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+} from "@mui/material";
 import { ChevronUp, SlidersHorizontal } from "lucide-react";
 
-function Filters() {
+interface FiltersProps {
+  categories: string[];
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+function Filters({
+  categories,
+  selectedCategory,
+  onCategoryChange,
+}: Readonly<FiltersProps>) {
   return (
     <div>
       <aside className="w-60 shrink-0 self-start rounded-2xl border border-gray-200 p-1.5">
@@ -42,38 +58,42 @@ function Filters() {
         </div>
         <FormGroup className="p-3 pb-7 relative">
           <FormControlLabel
-            control={<Checkbox defaultChecked sx={{color:"#e5e7eb"}} />}
+            control={<Checkbox defaultChecked sx={{ color: "#e5e7eb" }} />}
             label="In Stock"
           />
           <FormControlLabel
-            control={<Checkbox sx={{color:"#e5e7eb"}}/>}
+            control={<Checkbox sx={{ color: "#e5e7eb" }} />}
             label="Low Stock"
           />
 
           <div className="absolute bottom-0 left-4 right-4 h-px bg-gray-200" />
-
         </FormGroup>
         <div className="p-3 flex justify-between">
           <p className="font-medium ">Categories</p>
           <ChevronUp className="text-gray-400" />
         </div>
         <FormGroup className="p-3 pb-7 relative">
-          <FormControlLabel
-            control={<Checkbox defaultChecked sx={{color:"#e5e7eb"}} />}
-            label="clothes"
-          />
-          <FormControlLabel
-            control={<Checkbox sx={{color:"#e5e7eb"}}/>}
-            label="sports"
-          />
+          {categories?.map((category) => (
+            <FormControlLabel
+              key={category}
+              control={
+                <Checkbox
+                  checked={selectedCategory === category}
+                  onChange={() => onCategoryChange(category)}
+                  sx={{ color: "#e5e7eb" }}
+                />
+              }
+              label={category}
+            />
+          ))}
 
           <div className="absolute bottom-0 left-4 right-4 h-px bg-gray-200" />
-
         </FormGroup>
         <div className="my-4 text-center">
-            <Button
+          <Button
             variant="outlined"
             className="text-gray-400! border-gray-200! hover:border-gray-200! w-[87%]"
+            onClick={()=>onCategoryChange("All")}
           >
             Clear Filters
           </Button>
