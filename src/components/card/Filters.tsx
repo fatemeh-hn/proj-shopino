@@ -12,12 +12,26 @@ interface FiltersProps {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
+  availability: string[];
+  selectedAvailability: string;
+  onAvailabilityChange: (availabilityStatus: string) => void;
+  minPrice: number;
+  maxPrice: number;
+  priceRange: [number, number];
+  onPriceChange: (value: [number, number]) => void;
 }
 
 function Filters({
   categories,
   selectedCategory,
   onCategoryChange,
+  availability,
+  selectedAvailability,
+  onAvailabilityChange,
+  minPrice,
+  maxPrice,
+  priceRange,
+  onPriceChange,
 }: Readonly<FiltersProps>) {
   return (
     <div>
@@ -33,21 +47,29 @@ function Filters({
           <ChevronUp className="text-gray-400" />
         </div>
         <Box sx={{ px: 2 }}>
-          <Slider getAriaLabel={() => "price range"} valueLabelDisplay="auto" />
+          <Slider
+            value={priceRange}
+            min={minPrice}
+            max={maxPrice}
+            valueLabelDisplay="auto"
+            onChange={(_, newValue) => {
+              onPriceChange(newValue as [number, number]);
+            }}
+          />
         </Box>
         <div className="relative flex gap-6 p-3 pb-7">
           <Button
             variant="outlined"
             className="text-gray-400! border-gray-200! hover:border-gray-200!"
           >
-            $min
+            ${priceRange[0]}
           </Button>
           <p>_</p>
           <Button
             variant="outlined"
             className="text-gray-400! border-gray-200! hover:border-gray-200!"
           >
-            $max
+            ${priceRange[1]}
           </Button>
 
           <div className="absolute bottom-0 left-4 right-4 h-px bg-gray-200" />
@@ -57,14 +79,19 @@ function Filters({
           <ChevronUp className="text-gray-400" />
         </div>
         <FormGroup className="p-3 pb-7 relative">
-          <FormControlLabel
-            control={<Checkbox defaultChecked sx={{ color: "#e5e7eb" }} />}
-            label="In Stock"
-          />
-          <FormControlLabel
-            control={<Checkbox sx={{ color: "#e5e7eb" }} />}
-            label="Low Stock"
-          />
+          {availability.map((availabilityStatus) => (
+            <FormControlLabel
+              key={availabilityStatus}
+              control={
+                <Checkbox
+                  checked={selectedAvailability === availabilityStatus}
+                  onChange={() => onAvailabilityChange(availabilityStatus)}
+                  sx={{ color: "#e5e7eb" }}
+                />
+              }
+              label={availabilityStatus}
+            />
+          ))}
 
           <div className="absolute bottom-0 left-4 right-4 h-px bg-gray-200" />
         </FormGroup>
@@ -93,7 +120,9 @@ function Filters({
           <Button
             variant="outlined"
             className="text-gray-400! border-gray-200! hover:border-gray-200! w-[87%]"
-            onClick={()=>onCategoryChange("All")}
+            onClick={() => {
+              (onCategoryChange("All"), onAvailabilityChange("All"),onPriceChange([minPrice, maxPrice]));
+            }}
           >
             Clear Filters
           </Button>

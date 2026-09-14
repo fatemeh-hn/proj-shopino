@@ -11,6 +11,8 @@ function CardState() {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedAvailability, setSelectedAvailability] = useState("All");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,12 +34,38 @@ function CardState() {
   }, []);
 
   const categories = [...new Set(products?.map((product) => product.category))];
+  const availability = [
+    ...new Set(products?.map((product) => product.availabilityStatus)),
+  ];
+
   const filteredData = useMemo(() => {
     return products?.filter(
       (product) =>
-        selectedCategory === "All" || product.category === selectedCategory,
+        (selectedCategory === "All" || product.category === selectedCategory) &&
+        (selectedAvailability === "All" ||
+          product.availabilityStatus === selectedAvailability) &&
+        product.price >= priceRange[0] &&
+        product.price <= priceRange[1],
     );
-  }, [products, selectedCategory]);
+  }, [products, selectedCategory, selectedAvailability, priceRange]);
+
+  const [minPrice, maxPrice] = useMemo(() => {
+    if (products.length === 0) return [0, 0];
+
+    return products.reduce<[number, number]>(
+      ([min, max], product) => [
+        Math.min(min, product.price),
+        Math.max(max, product.price),
+      ],
+      [Infinity, -Infinity],
+    );
+  }, [products]);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setPriceRange([minPrice, maxPrice]);
+    }
+  }, [minPrice, maxPrice, products.length]);
 
   useEffect(() => {
     if (error) {
@@ -72,6 +100,13 @@ function CardState() {
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
+          availability={availability}
+          selectedAvailability={selectedAvailability}
+          onAvailabilityChange={setSelectedAvailability}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          priceRange={priceRange}
+          onPriceChange={setPriceRange}
         />
 
         <div className="flex-1">
