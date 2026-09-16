@@ -5,7 +5,12 @@ import { Product } from "../../utilities/types/productTypes";
 import { Snackbar } from "@mui/material";
 import Filters from "./Filters";
 
-function CardState() {
+
+interface CardStateProps {
+  search: string;
+}
+
+function CardState({ search }: Readonly<CardStateProps>) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -13,6 +18,7 @@ function CardState() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedAvailability, setSelectedAvailability] = useState("All");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -45,9 +51,10 @@ function CardState() {
         (selectedAvailability === "All" ||
           product.availabilityStatus === selectedAvailability) &&
         product.price >= priceRange[0] &&
-        product.price <= priceRange[1],
+        product.price <= priceRange[1] &&
+        product.title.toLowerCase().includes(search.trim().toLowerCase()),
     );
-  }, [products, selectedCategory, selectedAvailability, priceRange]);
+  }, [products, selectedCategory, selectedAvailability, priceRange, search]);
 
   const [minPrice, maxPrice] = useMemo(() => {
     if (products.length === 0) return [0, 0];

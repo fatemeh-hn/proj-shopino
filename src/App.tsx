@@ -1,8 +1,9 @@
 import Header from "./components/card/Header";
 import CardState from "./components/card/CardState";
-
+import { useState } from "react";
 
 function App() {
+  const [search, setSearch] = useState("");
   return (
     <div className="min-h-screen bg-gray-100 p-3">
       <main
@@ -18,8 +19,8 @@ function App() {
           shadow-sm
         "
       >
-        <Header />
-        <CardState />
+        <Header search={search} setSearch={setSearch} />
+        <CardState search={search} />
       </main>
     </div>
   );

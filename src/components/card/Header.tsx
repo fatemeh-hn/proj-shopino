@@ -1,5 +1,12 @@
 import { Handbag, Search, ShoppingCart } from "lucide-react";
-function Header() {
+
+interface Props{
+  search:string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
+
+
+function Header({search , setSearch}: Readonly<Props>) {
   return (
     <header className="border-b border-gray-200 bg-white">
       <div
@@ -31,6 +38,8 @@ function Header() {
             <input
               type="text"
               placeholder="Search for products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="
           w-full
           rounded-md
