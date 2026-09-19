@@ -1,12 +1,19 @@
 import { Handbag, Search, ShoppingCart } from "lucide-react";
+import Theme from "./Theme";
+import { useCallback, useState } from "react";
 
-interface Props{
-  search:string;
+interface Props {
+  search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
+function Header({ search, setSearch }: Readonly<Props>) {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-function Header({search , setSearch}: Readonly<Props>) {
+  const handleThemeChange = useCallback(() => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  }, []);
+
   return (
     <header className="border-b border-gray-200 bg-white">
       <div
@@ -25,6 +32,8 @@ function Header({search , setSearch}: Readonly<Props>) {
             <Handbag className="h-6 w-6" />
 
             <p className="text-xl font-bold text-black">Shopio</p>
+
+            <Theme theme={theme} onThemeChange={handleThemeChange} />
           </div>
         </div>
 

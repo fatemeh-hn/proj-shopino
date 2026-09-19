@@ -19,6 +19,7 @@ function CardState({ search }: Readonly<CardStateProps>) {
   const [selectedAvailability, setSelectedAvailability] = useState("All");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
   
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
