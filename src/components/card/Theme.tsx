@@ -71,7 +71,12 @@ function memoCustomizedSwitches({ theme, onThemeChange }: Readonly<Theme>) {
       <FormControlLabel
         control={
           <MaterialUISwitch
-            sx={{ m: 1 }}
+            sx={{
+              m: 1,
+              "& .MuiSwitch-thumb": {
+                backgroundColor: theme === "light" ? "#facc15" : "#001e3c",
+              },
+            }}
             checked={theme === "dark"}
             onChange={onThemeChange}
           />
