@@ -1,6 +1,7 @@
 import { Handbag, Search, ShoppingCart } from "lucide-react";
 import Theme from "./Theme";
 import { useCallback, useState } from "react";
+import { Link } from "react-router";
 
 interface Props {
   search: string;
@@ -28,7 +29,7 @@ function Header({ search, setSearch }: Readonly<Props>) {
         "
       >
         <div className="justify-self-start">
-          <div className="flex shrink-0 items-center gap-4">
+          <div className="flex shrink-0 items-center gap-3">
             <Handbag className="h-6 w-6" />
 
             <p className="text-xl font-bold text-black">Shopio</p>
@@ -86,9 +87,10 @@ function Header({ search, setSearch }: Readonly<Props>) {
               3
             </span>
           </button>
-          <button
-            type="button"
-            className="
+          <Link to={`/login`}>
+            <button
+              type="button"
+              className="
         rounded-md
         border
         border-blue-700
@@ -99,9 +101,10 @@ function Header({ search, setSearch }: Readonly<Props>) {
         transition
         hover:bg-blue-50
       "
-          >
-            Login
-          </button>
+            >
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </header>

@@ -1,6 +1,7 @@
 import { Heart } from "lucide-react";
 import { Button } from "./Button";
 import {CardProps} from "../../utilities/types/productTypes"
+import { Link } from "react-router";
 
 
 export function Card({ product}:Readonly<CardProps>) {
@@ -11,6 +12,7 @@ export function Card({ product}:Readonly<CardProps>) {
 
   return (
     <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <Link to={`/product/${product.id}`}>
       <div className="relative flex h-52 items-center justify-center bg-gray-100 p-4">
         <img
           src={product.images[0]}
@@ -37,6 +39,7 @@ export function Card({ product}:Readonly<CardProps>) {
           <Heart className="h-4 w-4 text-gray-700" />
         </button>
       </div>
+      </Link>
 
       <div className="flex flex-1 flex-col p-4">
         <h2 className="text-base font-bold text-gray-900">{product.title}</h2>

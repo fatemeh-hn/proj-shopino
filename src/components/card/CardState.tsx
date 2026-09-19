@@ -12,11 +12,11 @@ interface CardStateProps {
 
 function CardState({ search }: Readonly<CardStateProps>) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedAvailability, setSelectedAvailability] = useState("All");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedAvailability, setSelectedAvailability] = useState<string>("All");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
   
   

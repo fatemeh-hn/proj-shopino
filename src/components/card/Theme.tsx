@@ -1,6 +1,4 @@
 import { styled } from "@mui/material/styles";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { memo } from "react";
 
@@ -67,23 +65,16 @@ interface Theme {
 
 function memoCustomizedSwitches({ theme, onThemeChange }: Readonly<Theme>) {
   return (
-    <FormGroup>
-      <FormControlLabel
-        control={
-          <MaterialUISwitch
-            sx={{
-              m: 1,
-              "& .MuiSwitch-thumb": {
-                backgroundColor: theme === "light" ? "#facc15" : "#001e3c",
-              },
-            }}
-            checked={theme === "dark"}
-            onChange={onThemeChange}
-          />
-        }
-        label="theme"
-      />
-    </FormGroup>
+    <MaterialUISwitch
+      sx={{
+        m: 1,
+        "& .MuiSwitch-thumb": {
+          backgroundColor: theme === "light" ? "#facc15" : "#001e3c",
+        },
+      }}
+      checked={theme === "dark"}
+      onChange={onThemeChange}
+    />
   );
 }
 export default memo(memoCustomizedSwitches);
