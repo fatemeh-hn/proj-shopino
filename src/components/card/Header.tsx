@@ -4,8 +4,8 @@ import { useCallback, useState } from "react";
 import { Link } from "react-router";
 
 interface Props {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  search?: string;
+  setSearch?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function Header({ search, setSearch }: Readonly<Props>) {
@@ -48,8 +48,8 @@ function Header({ search, setSearch }: Readonly<Props>) {
             <input
               type="text"
               placeholder="Search for products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={search ?? ""}
+              onChange={(e) => setSearch?.(e.target.value)}
               className="
           w-full
           rounded-md
@@ -87,10 +87,9 @@ function Header({ search, setSearch }: Readonly<Props>) {
               3
             </span>
           </button>
-          <Link to={`/login`}>
-            <button
-              type="button"
-              className="
+          <Link
+            to={`/login`}
+            className="
         rounded-md
         border
         border-blue-700
@@ -101,9 +100,8 @@ function Header({ search, setSearch }: Readonly<Props>) {
         transition
         hover:bg-blue-50
       "
-            >
-              Login
-            </button>
+          >
+            Login
           </Link>
         </div>
       </div>

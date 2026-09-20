@@ -2,6 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import getProductDetails from "../api/cardDetails";
 import { Product } from "../utilities/types/productTypes";
+import Header from "../components/card/Header";
+import {
+  Barcode,
+  Handbag,
+  Package,
+  ShoppingBag,
+  Star,
+  Tag,
+  Weight,
+} from "lucide-react";
+import { Chip } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
+
+interface Props {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
 function ProductDetails() {
   const { id } = useParams();
@@ -47,15 +64,83 @@ function ProductDetails() {
 
   return (
     <div>
-      <div>
-        <div>
-          <img />
+      <Header />
+      <div className="flex">
+        <div className="w-[30%] bg-gray-100 m-5 rounded-2xl border border-gray-200">
+          <img src={product.images[0]} alt={product.title} />
         </div>
 
-        <div>
-          <h1>{product.title}</h1>
-          
-          <p>${product.price}</p>
+        <div className="m-5 w-[60%]">
+          <p className="mb-3 text-gray-500">{product.brand}</p>
+          <h1 className="font-bold mb-3">{product.title}</h1>
+          <div className="mb-3 flex gap-1 font-bold">
+            <StarIcon sx={{ color: "#fbbf24" }} />
+            <p>{product.rating}</p>
+          </div>
+
+          <p className="mb-3 font-bold text-2xl">${product.price}</p>
+
+          <p className="mb-3 text-gray-500">{product.description}</p>
+
+          <div className="grid grid-cols-3 gap-6 mt-6">
+            {/* Brand */}
+            <div className="flex gap-4">
+              <Handbag />
+              <div>
+                <p className="text-gray-500">Brand</p>
+                <p>{product.brand}</p>
+              </div>
+            </div>
+
+            {/* Category */}
+            <div className="flex gap-4">
+              <ShoppingBag />
+              <div>
+                <p className="text-gray-500">Category</p>
+                <p>{product.category}</p>
+              </div>
+            </div>
+
+            {/* SKU */}
+            <div className="flex gap-4">
+              <Barcode />
+              <div>
+                <p className="text-gray-500">Sku</p>
+                <p>{product.sku}</p>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div className="flex gap-4">
+              <Tag />
+              <div>
+                <p className="text-gray-500">Tags</p>
+                <div className="flex gap-2">
+                  {product.tags.map((tag) => (
+                    <Chip key={tag} label={tag} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Weight */}
+            <div className="flex gap-4">
+              <Weight />
+              <div>
+                <p className="text-gray-500">Weight</p>
+                <p>{product.weight}</p>
+              </div>
+            </div>
+
+            {/* Availability */}
+            <div className="flex gap-4">
+              <Package />
+              <div>
+                <p className="text-gray-500">Availability</p>
+                <p>{product.availabilityStatus}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
