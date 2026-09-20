@@ -3,19 +3,22 @@ import { useParams } from "react-router";
 import getProductDetails from "../api/cardDetails";
 import { Product } from "../utilities/types/productTypes";
 import Header from "../components/card/Header";
+import NumberSpinner from "../components/card/NumberSpinner";
 import {
   Barcode,
   Handbag,
   Package,
   ShieldCheck,
   ShoppingBag,
-  Star,
   Tag,
   Truck,
   Weight,
 } from "lucide-react";
-import { Chip } from "@mui/material";
+import { Box, Chip } from "@mui/material";
+import Rating from '@mui/material/Rating';
 import StarIcon from "@mui/icons-material/Star";
+import { Button } from "../components/card/Button";
+import BackgroundLetterAvatars from "../components/card/Avatar";
 
 interface Props {
   search: string;
@@ -28,6 +31,7 @@ function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -68,7 +72,7 @@ function ProductDetails() {
     <div>
       <Header />
       <div className="flex">
-        <div className="w-[30%] bg-gray-100 m-5 rounded-2xl border border-gray-200">
+        <div className="w-[30%] h-[30%] bg-gray-100 m-5 rounded-2xl border border-gray-200">
           <img src={product.images[0]} alt={product.title} />
         </div>
 
@@ -156,10 +160,9 @@ function ProductDetails() {
                 </p>
               </div>
             </div>
-
           </div>
           <div className="flex gap-10">
-             {/* Warranty */}
+            {/* Warranty */}
             <div className="flex gap-4 p-4">
               <ShieldCheck className="text-gray-500" />
               <div>
@@ -178,9 +181,57 @@ function ProductDetails() {
                 </p>
               </div>
             </div>
-
           </div>
-          
+
+          <div className="flex gap-7">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 4,
+                justifyContent: "center",
+                width: "200px",
+              }}
+            >
+              <NumberSpinner size="small" defaultValue={1} />
+            </Box>
+
+            <div className="w-80">
+              <Button />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="border border-gray-200 mt-6 mx-4 rounded-2xl">
+          <h1 className="m-4 p-4 font-bold">Customer Reviews</h1>
+          <div className="m-7">
+            {product.reviews?.map((review) => (
+              <div
+                key={review.reviewerEmail}
+                className="flex gap-4 border border-gray-200 rounded-2xl p-4 mb-4"
+              >
+                <BackgroundLetterAvatars name={review.reviewerName} />
+
+                <div className="">
+                  <p className="font-bold mb-2">{review.reviewerName}</p>
+                  <p className="text-sm text-gray-500 mb-2">
+                    {new Date(review.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+
+                  <Box sx={{ "& > legend": { mt: 2 } }}>
+                    <Rating name="read-only" value={review.rating} readOnly />
+                  </Box>
+                  <p className="mt-2">{review.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

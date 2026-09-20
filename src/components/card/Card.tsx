@@ -44,7 +44,7 @@ export function Card({ product}:Readonly<CardProps>) {
       <div className="flex flex-1 flex-col p-4">
         <h2 className="text-base font-bold text-gray-900">{product.title}</h2>
 
-        <h3 className="mt-1 text-base font-bold text-gray-900">
+        <h3 className="mt-1 text-base  text-gray-900">
           ${product.price}
         </h3>
 
