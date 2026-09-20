@@ -11,7 +11,8 @@ export interface Product {
   sku:string
   tags:string[]
   weight:number
-  
+  warrantyInformation:string
+  shippingInformation:string
 }
 
 export interface CardProps {

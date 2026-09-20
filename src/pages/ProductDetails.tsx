@@ -7,9 +7,11 @@ import {
   Barcode,
   Handbag,
   Package,
+  ShieldCheck,
   ShoppingBag,
   Star,
   Tag,
+  Truck,
   Weight,
 } from "lucide-react";
 import { Chip } from "@mui/material";
@@ -71,76 +73,114 @@ function ProductDetails() {
         </div>
 
         <div className="m-5 w-[60%]">
-          <p className="mb-3 text-gray-500">{product.brand}</p>
-          <h1 className="font-bold mb-3">{product.title}</h1>
+          <p className="mb-3 text-gray-500">{product.brand || "No brand"}</p>
+          <h1 className="font-bold mb-3">{product.title || "No title"}</h1>
           <div className="mb-3 flex gap-1 font-bold">
             <StarIcon sx={{ color: "#fbbf24" }} />
-            <p>{product.rating}</p>
+            <p>{product.rating || "No rating"}</p>
           </div>
 
-          <p className="mb-3 font-bold text-2xl">${product.price}</p>
+          <p className="mb-3 font-bold text-2xl">
+            ${product.price || "No price"}
+          </p>
 
-          <p className="mb-3 text-gray-500">{product.description}</p>
+          <p className="mb-3 text-gray-500">
+            {product.description || "No description"}
+          </p>
 
-          <div className="grid grid-cols-3 gap-6 mt-6">
+          <div className="mt-6 grid grid-cols-3 border-b border-gray-200 p-4">
             {/* Brand */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 border-r border-gray-200 p-4">
               <Handbag />
               <div>
                 <p className="text-gray-500">Brand</p>
-                <p>{product.brand}</p>
+                <p>{product.brand || "No brand"}</p>
               </div>
             </div>
 
             {/* Category */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 border-r border-gray-200 p-4">
               <ShoppingBag />
               <div>
                 <p className="text-gray-500">Category</p>
-                <p>{product.category}</p>
+                <p>{product.category || "No category"}</p>
               </div>
             </div>
 
             {/* SKU */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 p-4">
               <Barcode />
               <div>
                 <p className="text-gray-500">Sku</p>
-                <p>{product.sku}</p>
+                <p>{product.sku || "No sku"}</p>
               </div>
             </div>
 
             {/* Tags */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 border-r border-gray-200 p-4">
               <Tag />
               <div>
                 <p className="text-gray-500">Tags</p>
                 <div className="flex gap-2">
-                  {product.tags.map((tag) => (
-                    <Chip key={tag} label={tag} />
-                  ))}
+                  {product.tags?.length > 0 ? (
+                    product.tags.map((tag) => <Chip key={tag} label={tag} />)
+                  ) : (
+                    <p>No tags</p>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Weight */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 border-r border-gray-200 p-4">
               <Weight />
               <div>
                 <p className="text-gray-500">Weight</p>
-                <p>{product.weight}</p>
+                <p>{product.weight || "No weight"}</p>
               </div>
             </div>
 
             {/* Availability */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 p-4">
               <Package />
               <div>
                 <p className="text-gray-500">Availability</p>
-                <p>{product.availabilityStatus}</p>
+                <p
+                  className={
+                    product.availabilityStatus === "Low Stock"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }
+                >
+                  {product.availabilityStatus || "No availability"}
+                </p>
               </div>
             </div>
+
           </div>
+          <div className="flex gap-10">
+             {/* Warranty */}
+            <div className="flex gap-4 p-4">
+              <ShieldCheck className="text-gray-500" />
+              <div>
+                <p className="text-gray-500">
+                  {product.warrantyInformation || "No warrantyInformation"}
+                </p>
+              </div>
+            </div>
+
+            {/* Shipping */}
+            <div className="flex gap-4 p-4">
+              <Truck className="text-gray-500" />
+              <div>
+                <p className="text-gray-500">
+                  {product.shippingInformation || "No shippingInformation"}
+                </p>
+              </div>
+            </div>
+
+          </div>
+          
         </div>
       </div>
     </div>
