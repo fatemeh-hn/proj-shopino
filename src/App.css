@@ -1,10 +1,2 @@
 @import "tailwindcss";
 
-@font-face {
-    font-family: "VazirMatn";
-    src: url(./assets/fonts/Vazirmatn-Regular.woff2);
-}
-
-body {
-  font-family: "VazirMatn", sans-serif;
-}

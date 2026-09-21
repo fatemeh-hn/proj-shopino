@@ -196,7 +196,7 @@ function ProductDetails() {
               <NumberSpinner size="small" defaultValue={1} />
             </Box>
 
-            <div className="w-80">
+            <div className="w-80 mt-1">
               <Button />
             </div>
           </div>
