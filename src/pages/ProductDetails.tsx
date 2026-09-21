@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import getProductDetails from "../api/cardDetails";
 import { Product } from "../utilities/types/productTypes";
-import Header from "../components/card/Header";
 import NumberSpinner from "../components/card/NumberSpinner";
 import {
   Barcode,
@@ -14,16 +13,11 @@ import {
   Truck,
   Weight,
 } from "lucide-react";
-import { Box, Chip } from "@mui/material";
-import Rating from '@mui/material/Rating';
+import { Box, Breadcrumbs, Chip, Typography } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "../components/card/Button";
 import BackgroundLetterAvatars from "../components/card/Avatar";
-
-interface Props {
-  search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-}
 
 function ProductDetails() {
   const { id } = useParams();
@@ -31,7 +25,6 @@ function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -70,9 +63,27 @@ function ProductDetails() {
 
   return (
     <div>
-      <div>
-        <p>bcNCL</p>
+      {/* Breadcrumb */}
+      <div className="px-7 pt-5  ">
+        <Breadcrumbs
+          separator={<span className="text-3xl">›</span>}
+          aria-label="breadcrumb"
+        >
+          <Link to="/" className="text-gray-700 hover:text-black font-bold">
+            Home
+          </Link>
+
+          <Typography
+            sx={{
+              color: "#6a7282",
+              fontWeight: 700,
+            }}
+          >
+            {product.title}
+          </Typography>
+        </Breadcrumbs>
       </div>
+      
       <div className="flex">
         <div className="w-[30%] h-[30%] bg-gray-100 m-5 rounded-2xl border border-gray-200">
           <img src={product.images[0]} alt={product.title} />
