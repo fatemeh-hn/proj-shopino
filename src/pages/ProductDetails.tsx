@@ -70,7 +70,9 @@ function ProductDetails() {
 
   return (
     <div>
-      <Header />
+      <div>
+        <p>bcNCL</p>
+      </div>
       <div className="flex">
         <div className="w-[30%] h-[30%] bg-gray-100 m-5 rounded-2xl border border-gray-200">
           <img src={product.images[0]} alt={product.title} />

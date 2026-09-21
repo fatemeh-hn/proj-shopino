@@ -11,7 +11,7 @@ export function Card({ product}:Readonly<CardProps>) {
       : "text-green-500";
 
   return (
-    <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-transform duration-300 hover:scale-105">
       <Link to={`/product/${product.id}`}>
       <div className="relative flex h-52 items-center justify-center bg-gray-100 p-4">
         <img
