@@ -16,33 +16,92 @@ function Login() {
 
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  
 
-  const submitHandler = (e:React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const submitHandler = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const userEmail = email.current?.value;
     const userPassword = password.current?.value;
-console.log({userEmail,userPassword});
+
+    console.log({
+      userEmail,
+      userPassword,
+    });
   };
+
   return (
-    <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/login.png')" }}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundImage: "url('/login.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <Box
         sx={{
           minHeight: "100vh",
+
           display: "flex",
           alignItems: "center",
-          justifyContent: "start",
-          gap: "50px",
+          justifyContent: {
+            xs: "center",
+            sm: "center",
+            md: "start",
+            lg: "start",
+          },
+
+          flexDirection: {
+            xs: "column",
+            sm: "column",
+            md: "row",
+          },
+
+          gap: {
+            xs: "25px",
+            sm: "30px",
+            md: "35px",
+            lg: "50px",
+          },
+
+          padding: {
+            xs: "30px 20px",
+            sm: "40px 30px",
+            md: "40px 40px",
+            lg: "40px",
+          },
         }}
       >
-        {/* Text */}
         <Box
           sx={{
-            width: "350px",
-            marginLeft: "20px",
+            flexShrink: 0,
+
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "280px",
+              lg: "350px",
+            },
+
+            maxWidth: {
+              xs: "450px",
+              sm: "500px",
+              md: "280px",
+              lg: "350px",
+            },
+
+            textAlign: {
+              xs: "center",
+              sm: "center",
+              md: "left",
+            },
+
+            marginLeft: {
+              xs: 0,
+              md: 0,
+              lg: "20px",
+            },
           }}
         >
           <Typography
@@ -51,6 +110,15 @@ console.log({userEmail,userPassword});
               fontWeight: 500,
               color: "#0f172a",
               marginBottom: "15px",
+
+              fontSize: {
+                xs: "30px",
+                sm: "34px",
+                md: "38px",
+                lg: "48px",
+              },
+
+              lineHeight: 1.2,
             }}
           >
             Shop Smarter,
@@ -61,7 +129,14 @@ console.log({userEmail,userPassword});
           <Typography
             sx={{
               color: "#64748b",
-              fontSize: "17px",
+
+              fontSize: {
+                xs: "14px",
+                sm: "15px",
+                md: "15px",
+                lg: "17px",
+              },
+
               lineHeight: 1.7,
             }}
           >
@@ -69,33 +144,79 @@ console.log({userEmail,userPassword});
           </Typography>
         </Box>
 
-        {/* Login Form */}
         <Box
           component="form"
           onSubmit={submitHandler}
           sx={{
-            width: "450px",
+            width: {
+              xs: "100%",
+              sm: "100%",
+              md: "380px",
+              lg: "450px",
+            },
+
+            maxWidth: {
+              xs: "450px",
+              sm: "500px",
+              md: "380px",
+              lg: "450px",
+            },
+
+            boxSizing: "border-box",
+
             backgroundColor: "#FCFCFC",
+
             border: "1px solid #e2e8f0",
+
             borderRadius: "16px",
-            padding: "40px",
+
+            padding: {
+              xs: "25px 20px",
+              sm: "30px",
+              md: "30px",
+              lg: "40px",
+            },
+
             boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+
             transition: "all 0.3s ease",
 
             "&:hover": {
-              transform: "scale(1.06)",
-              boxShadow: "0 15px 35px rgba(0,0,0,0.1)",
+              transform: {
+                xs: "none",
+                sm: "none",
+                md: "scale(1.02)",
+              },
+
+              boxShadow: {
+                xs: "0 10px 30px rgba(0,0,0,0.05)",
+                md: "0 15px 35px rgba(0,0,0,0.1)",
+              },
             },
           }}
         >
-          {/* Logo */}
-          <div className="mb-4 flex shrink-0 items-center justify-center gap-3">
-            <Handbag className="h-6 w-6" />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "12px",
+              marginBottom: "16px",
+            }}
+          >
+            <Handbag size={24} />
 
-            <p className="text-xl font-bold text-black">Shopio</p>
-          </div>
+            <Typography
+              sx={{
+                fontSize: "20px",
+                fontWeight: 700,
+                color: "#000",
+              }}
+            >
+              Shopio
+            </Typography>
+          </Box>
 
-          {/* Title */}
           <Typography
             variant="h4"
             sx={{
@@ -103,23 +224,35 @@ console.log({userEmail,userPassword});
               textAlign: "center",
               color: "#0f172a",
               marginBottom: "8px",
+
+              fontSize: {
+                xs: "26px",
+                sm: "28px",
+                md: "30px",
+                lg: "32px",
+              },
             }}
           >
             Welcome back
           </Typography>
 
-          {/* Subtitle */}
           <Typography
             sx={{
               textAlign: "center",
               color: "#64748b",
-              marginBottom: "25px",
+              marginBottom: "20px",
+
+              fontSize: {
+                xs: "13px",
+                sm: "14px",
+                md: "14px",
+                lg: "16px",
+              },
             }}
           >
             Login to your Shopio account
           </Typography>
 
-          {/* Email */}
           <TextField
             fullWidth
             required
@@ -129,7 +262,6 @@ console.log({userEmail,userPassword});
             inputRef={email}
           />
 
-          {/* Password */}
           <TextField
             fullWidth
             required
@@ -144,6 +276,13 @@ console.log({userEmail,userPassword});
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        border: "none",
+                        background: "transparent",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
                     >
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
@@ -153,10 +292,8 @@ console.log({userEmail,userPassword});
             }}
           />
 
-          {/* Remember me */}
           <FormControlLabel control={<Checkbox />} label="Remember me" />
 
-          {/* Login Button */}
           <Button
             type="submit"
             fullWidth
@@ -171,13 +308,11 @@ console.log({userEmail,userPassword});
             }}
           >
             Login
-            <div>
-              <MoveRight />
-            </div>
+            <MoveRight />
           </Button>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 }
 
