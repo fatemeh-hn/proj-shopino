@@ -8,12 +8,22 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import { Eye, EyeOff, Handbag } from "lucide-react";
-import { useState } from "react";
+import { Eye, EyeOff, Handbag, MoveRight } from "lucide-react";
+import { useRef, useState } from "react";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
+  
+
+  const submitHandler = (e:React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const userEmail = email.current?.value;
+    const userPassword = password.current?.value;
+console.log({userEmail,userPassword});
+  };
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat"
@@ -61,6 +71,8 @@ function Login() {
 
         {/* Login Form */}
         <Box
+          component="form"
+          onSubmit={submitHandler}
           sx={{
             width: "450px",
             backgroundColor: "#FCFCFC",
@@ -108,14 +120,23 @@ function Login() {
           </Typography>
 
           {/* Email */}
-          <TextField fullWidth label="Email" type="email" margin="normal" />
+          <TextField
+            fullWidth
+            required
+            label="Email"
+            type="email"
+            margin="normal"
+            inputRef={email}
+          />
 
           {/* Password */}
           <TextField
             fullWidth
+            required
             label="Password"
             type={showPassword ? "text" : "password"}
             margin="normal"
+            inputRef={password}
             slotProps={{
               input: {
                 endAdornment: (
@@ -137,6 +158,7 @@ function Login() {
 
           {/* Login Button */}
           <Button
+            type="submit"
             fullWidth
             variant="contained"
             sx={{
@@ -145,9 +167,13 @@ function Login() {
               borderRadius: "8px",
               textTransform: "none",
               fontSize: "16px",
+              gap: "4px",
             }}
           >
             Login
+            <div>
+              <MoveRight />
+            </div>
           </Button>
         </Box>
       </Box>
