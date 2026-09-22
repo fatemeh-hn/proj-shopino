@@ -14,6 +14,7 @@ export interface Product {
   warrantyInformation: string;
   shippingInformation: string;
   reviews:Reviews[];
+  discountPercentage:number;
 }
 
 
