@@ -9,26 +9,25 @@ import {
 } from "@mui/material";
 
 import { Eye, EyeOff, Handbag, MoveRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useForm , SubmitHandler  } from "react-hook-form"
+
+interface Inputs{
+  username:string,
+  password:string,
+}
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+   const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>()
+  const submitHandler: SubmitHandler<Inputs> = (data) => {}
 
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
-
-  const submitHandler = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const userEmail = email.current?.value;
-    const userPassword = password.current?.value;
-
-    console.log({
-      userEmail,
-      userPassword,
-    });
-  };
-
+  
   return (
     <Box
       sx={{
@@ -146,7 +145,7 @@ function Login() {
 
         <Box
           component="form"
-          onSubmit={submitHandler}
+          onSubmit={handleSubmit(submitHandler)}
           sx={{
             width: {
               xs: "100%",
@@ -256,10 +255,11 @@ function Login() {
           <TextField
             fullWidth
             required
-            label="Email"
-            type="email"
+            label="UserName"
+            type="username"
             margin="normal"
-            inputRef={email}
+            {...register("username")}
+            
           />
 
           <TextField
@@ -268,7 +268,7 @@ function Login() {
             label="Password"
             type={showPassword ? "text" : "password"}
             margin="normal"
-            inputRef={password}
+            {...register("password")}
             slotProps={{
               input: {
                 endAdornment: (
