@@ -152,14 +152,14 @@ function Login() {
               xs: "100%",
               sm: "100%",
               md: "380px",
-              lg: "450px",
+              lg: "430px",
             },
 
             maxWidth: {
               xs: "450px",
               sm: "500px",
               md: "380px",
-              lg: "450px",
+              lg: "430px",
             },
 
             boxSizing: "border-box",
