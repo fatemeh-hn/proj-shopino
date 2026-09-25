@@ -12,7 +12,7 @@ import {
 import StarIcon from "@mui/icons-material/Star";
 import { Product } from "../../utilities/types/productTypes";
 import { Button } from "../card/Button";
-import NumberSpinner from "../card/NumberSpinner";
+import NumberSpinner from "./NumberSpinner";
 
 interface ProductInfoProps {
   product: Product;

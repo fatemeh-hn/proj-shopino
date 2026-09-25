@@ -1,5 +1,5 @@
 import React from "react";
-import BackgroundLetterAvatars from "../card/Avatar";
+import BackgroundLetterAvatars from "./Avatar";
 import { Box, Rating } from "@mui/material";
 import { Product } from "../../utilities/types/productTypes";
 
