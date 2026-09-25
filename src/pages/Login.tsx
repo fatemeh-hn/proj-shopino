@@ -11,11 +11,10 @@ import {
 import { Eye, EyeOff, Handbag, MoveRight } from "lucide-react";
 import { useState } from "react";
 import { useForm , SubmitHandler  } from "react-hook-form"
+import { UserInputs } from "../utilities/types/userInterface";
+import { LOGIN_USER } from "../api/login";
 
-interface Inputs{
-  username:string,
-  password:string,
-}
+
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,8 +23,11 @@ function Login() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>()
-  const submitHandler: SubmitHandler<Inputs> = (data) => {}
+  } = useForm<UserInputs>()
+  const submitHandler: SubmitHandler<UserInputs> = async(data) => {
+    const res = await LOGIN_USER(data);
+    
+  }
 
   
   return (

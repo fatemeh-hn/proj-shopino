@@ -1,7 +1,7 @@
 import React from "react";
 import BackgroundLetterAvatars from "./Avatar";
 import { Box, Rating } from "@mui/material";
-import { Product } from "../../utilities/types/productTypes";
+import { Product } from "../../utilities/types/productInterface";
 
 interface ProductInfoProps {
   product: Product;

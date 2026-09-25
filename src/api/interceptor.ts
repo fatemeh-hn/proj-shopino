@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CloudLightning } from 'lucide-react';
-const productAxios = axios.create({
+
+export const productAxios = axios.create({
     baseURL: 'https://dummyjson.com/',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' },

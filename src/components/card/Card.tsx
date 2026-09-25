@@ -1,6 +1,6 @@
 import { Heart } from "lucide-react";
 import { Button } from "./Button";
-import { CardProps } from "../../utilities/types/productTypes";
+import { CardProps } from "../../utilities/types/productInterface";
 import { Link } from "react-router";
 
 export function Card({ product }: Readonly<CardProps>) {

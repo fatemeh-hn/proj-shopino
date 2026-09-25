@@ -10,7 +10,7 @@ import {
   Weight,
 } from "lucide-react";
 import StarIcon from "@mui/icons-material/Star";
-import { Product } from "../../utilities/types/productTypes";
+import { Product } from "../../utilities/types/productInterface";
 import { Button } from "../card/Button";
 import NumberSpinner from "./NumberSpinner";
 

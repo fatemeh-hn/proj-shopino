@@ -1,7 +1,7 @@
 import Card from "./Card";
 import { useEffect, useMemo, useState } from "react";
 import getProduct from "../../api/card";
-import { Product } from "../../utilities/types/productTypes";
+import { Product } from "../../utilities/types/productInterface";
 import { Snackbar } from "@mui/material";
 import Filters from "./Filters";
 

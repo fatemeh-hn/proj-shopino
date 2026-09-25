@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import getProductDetails from "../api/cardDetails";
-import { Product } from "../utilities/types/productTypes";
+import { Product } from "../utilities/types/productInterface";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Header from "../components/card/Header";
 import ProductInfo from "../components/productDetail/ProductInfo";
