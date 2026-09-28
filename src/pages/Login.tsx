@@ -11,19 +11,29 @@ import {
 import { Eye, EyeOff, Handbag, MoveRight } from "lucide-react";
 import { useState } from "react";
 import { useForm , SubmitHandler  } from "react-hook-form"
-import { UserInputs } from "../utilities/types/userInterface";
 import { LOGIN_USER } from "../api/login";
+import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
 
 
 
 function Login() {
-  const [showPassword, setShowPassword] = useState(false);
+const loginSchema = z.object({
+  username: z.string().trim().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+type UserInputs = z.infer<typeof loginSchema >
+
+  const [showPassword, setShowPassword] = useState(false)
+
    const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<UserInputs>()
+    formState:{errors},
+  } = useForm<UserInputs>(
+    {resolver:zodResolver(loginSchema)}
+  )
   const submitHandler: SubmitHandler<UserInputs> = async(data) => {
     const res = await LOGIN_USER(data);
     
@@ -261,6 +271,8 @@ function Login() {
             type="username"
             margin="normal"
             {...register("username")}
+            helperText={errors.username?.message}
+            error={!!errors.username}
             
           />
 
@@ -271,6 +283,8 @@ function Login() {
             type={showPassword ? "text" : "password"}
             margin="normal"
             {...register("password")}
+            helperText={errors.password?.message}
+            error={!!errors.password}
             slotProps={{
               input: {
                 endAdornment: (
