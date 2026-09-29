@@ -16,6 +16,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import {Navigate, useNavigate} from "react-router"
+import { showSnackbar } from "../api/snackbarNotifications";
 
 function Login() {
   const loginSchema = z.object({
@@ -44,6 +45,7 @@ function Login() {
       samesite: "strict",
     });
     navigate("/");
+    showSnackbar("LoggedIn successfully" , "success")
   };
 
   return (
