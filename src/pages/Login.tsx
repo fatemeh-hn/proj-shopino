@@ -10,36 +10,42 @@ import {
 
 import { Eye, EyeOff, Handbag, MoveRight } from "lucide-react";
 import { useState } from "react";
-import { useForm , SubmitHandler  } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form";
 import { LOGIN_USER } from "../api/login";
 import * as z from "zod";
-import { zodResolver } from '@hookform/resolvers/zod';
-
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import Cookies from "js-cookie";
+import {Navigate, useNavigate} from "react-router"
 
 function Login() {
-const loginSchema = z.object({
-  username: z.string().trim().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+  const loginSchema = z.object({
+    username: z
+      .string()
+      .trim()
+      .min(3, "Username must be at least 3 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+  });
 
-type UserInputs = z.infer<typeof loginSchema >
+  type UserInputs = z.infer<typeof loginSchema>;
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-   const {
+  const {
     register,
     handleSubmit,
-    formState:{errors},
-  } = useForm<UserInputs>(
-    {resolver:zodResolver(loginSchema)}
-  )
-  const submitHandler: SubmitHandler<UserInputs> = async(data) => {
+    formState: { errors },
+  } = useForm<UserInputs>({ resolver: zodResolver(loginSchema) });
+  const submitHandler: SubmitHandler<UserInputs> = async (data) => {
     const res = await LOGIN_USER(data);
-    
-  }
+    Cookies.set("token", res.data.accessToken, {
+      secure: true,
+      expires: 7,
+      samesite: "strict",
+    });
+    navigate("/");
+  };
 
-  
   return (
     <Box
       sx={{
@@ -273,7 +279,6 @@ type UserInputs = z.infer<typeof loginSchema >
             {...register("username")}
             helperText={errors.username?.message}
             error={!!errors.username}
-            
           />
 
           <TextField
