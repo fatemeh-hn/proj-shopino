@@ -15,7 +15,7 @@ import { LOGIN_USER } from "../api/login";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
-import {Navigate, useNavigate} from "react-router"
+import { useNavigate} from "react-router"
 import { showSnackbar } from "../api/snackbarNotifications";
 
 function Login() {
