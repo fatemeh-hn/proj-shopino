@@ -1,12 +1,27 @@
 import axios from 'axios';
 import { showSnackbar } from './snackbarNotifications';
+import Cookies from "js-cookie";
 
 export const productAxios = axios.create({
     baseURL: 'https://dummyjson.com/',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' },
 
-})
+});
+
+productAxios.interceptors.request.use(
+    (config) => {
+        const token = Cookies.get("token");
+
+        if(token){
+            config.headers.Authorization = `Bearer ${token}`;
+
+
+        }
+        return config
+
+    }
+)
 
 productAxios.interceptors.response.use(
     (response) => (response),

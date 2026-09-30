@@ -15,7 +15,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/product/:id" element={<ProductDetails/>} />
       <Route path="/profile" element={<ProtectedRoute element={<Profile/>} />} />
-       
     </Routes>
     <GlobalSnackbar/>
   
