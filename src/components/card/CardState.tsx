@@ -1,6 +1,6 @@
 import Card from "./Card";
 import { useEffect, useMemo, useState } from "react";
-import getProduct from "../../api/card";
+import {GET_PRODUCT} from "../../api/card";
 import { Product } from "../../utilities/types/productInterface";
 import { Snackbar } from "@mui/material";
 import Filters from "./Filters";
@@ -21,24 +21,24 @@ function CardState({ search }: Readonly<CardStateProps>) {
   
   
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data = await getProduct();
-        setProducts(data.products);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Something went wrong");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
 
-    fetchProduct();
-  }, []);
+      const response = await GET_PRODUCT();
+
+      setProducts(response.data.products);
+    } catch (error) {
+      setError("Failed to get products");
+      setOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+ void fetchProducts();
+}, []);
 
   const categories = [...new Set(products?.map((product) => product.category))];
   const availability = [

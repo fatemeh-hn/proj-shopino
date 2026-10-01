@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import getProductDetails from "../api/cardDetails";
+import {GET_PRODUCT_DETAIL} from "../api/cardDetails";
 import { Product } from "../utilities/types/productInterface";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Header from "../components/card/Header";
@@ -21,9 +21,9 @@ function ProductDetails() {
           throw new Error("Product ID not found");
         }
 
-        const data = await getProductDetails(id);
+        const response = await GET_PRODUCT_DETAIL(id);
 
-        setProduct(data);
+        setProduct(response.data);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -35,7 +35,7 @@ function ProductDetails() {
       }
     };
 
-    fetchProduct();
+    void fetchProduct();
   }, [id]);
 
   if (loading) {

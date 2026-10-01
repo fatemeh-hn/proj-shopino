@@ -1,21 +1,7 @@
-const getProduct = async () => {
-    const response = await fetch("https://dummyjson.com/products",
-        { method: "GET" })
+import { productAxios } from "./interceptor";
 
-    if (response.status === 200) {
-        const resJson = await response.json();
-        return resJson;
-    }
-
-    if (response.status === 404) {
-        throw new Error("Not Found");
-    }
-
-    if (response.status === 500) {
-        throw new Error("Server Error");
-    }
-
+export const GET_PRODUCT = async()=>{
+    return productAxios.get("products",{withCredentials:true})
 
 }
-export default getProduct
 
