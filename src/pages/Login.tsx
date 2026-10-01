@@ -15,8 +15,9 @@ import { LOGIN_USER } from "../api/login";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
-import { useNavigate} from "react-router"
+import { useNavigate } from "react-router";
 import { showSnackbar } from "../api/snackbarNotifications";
+import { useMutation } from "@tanstack/react-query";
 
 function Login() {
   const loginSchema = z.object({
@@ -37,16 +38,35 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<UserInputs>({ resolver: zodResolver(loginSchema) });
+
+  // const submitHandler: SubmitHandler<UserInputs> = async (data) => {
+  //   const res = await LOGIN_USER(data);
+  //   Cookies.set("token", res.data.accessToken, {
+  //     secure: true,
+  //     expires: 7,
+  //     samesite: "strict",
+  //   });
+  //   navigate("/");
+  //   showSnackbar("LoggedIn successfully" , "success")
+  // };
+
   const submitHandler: SubmitHandler<UserInputs> = async (data) => {
-    const res = await LOGIN_USER(data);
-    Cookies.set("token", res.data.accessToken, {
-      secure: true,
-      expires: 7,
-      samesite: "strict",
-    });
-    navigate("/");
-    showSnackbar("LoggedIn successfully" , "success")
+    mutate(data);
   };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: UserInputs) => LOGIN_USER(data),
+    onSuccess: (res) => {
+      Cookies.set("token", res.data.accessToken, {
+        secure: true,
+        expires: 7,
+        samesite: "strict",
+      });
+      navigate("/");
+      showSnackbar("LoggedIn successfully", "success");
+    },
+    // onError:()=>{}
+  });
 
   return (
     <Box

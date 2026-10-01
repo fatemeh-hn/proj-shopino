@@ -19,6 +19,7 @@ function CardState({ search }: Readonly<CardStateProps>) {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
     queryFn: GET_PRODUCT,
+    staleTime:1*60*1000
   });
   const products: Product[] = data?.data?.products ?? [];
 
