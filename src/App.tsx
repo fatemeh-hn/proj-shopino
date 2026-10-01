@@ -5,22 +5,24 @@ import Login from "./pages/Login";
 import GlobalSnackbar from "./components/card/GlobalSnackbar";
 import ProtectedRoute from "./utilities/HelperFunctions/protectedRoutes";
 import Profile from "./pages/Profile";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-
+const queryClient = new QueryClient();
 function App() {
-  return(
-    <>
+  return (
+    <QueryClientProvider client={queryClient}>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/product/:id" element={<ProductDetails/>} />
-      <Route path="/profile" element={<ProtectedRoute element={<Profile/>} />} />
-    </Routes>
-    <GlobalSnackbar/>
-  
-    </>
-  
- 
-)}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+      </Routes>
+      <GlobalSnackbar />
+    </QueryClientProvider>
+  );
+}
 
 export default App;
