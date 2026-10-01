@@ -5,3 +5,8 @@ export const GET_PRODUCT = async()=>{
 
 }
 
+// export const ADD_PRODUCT = async(data)=>{
+//     return productAxios.post("products/add",data,{withCredentials:true})
+
+// }
+

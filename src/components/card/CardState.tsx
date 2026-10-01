@@ -1,6 +1,6 @@
 import Card from "./Card";
 import { useEffect, useMemo, useState } from "react";
-import { GET_PRODUCT } from "../../api/card";
+import { GET_PRODUCT } from "../../api/cardProducts";
 import { Product } from "../../utilities/types/productInterface";
 import { showSnackbar } from "../../api/snackbarNotifications";
 import Filters from "./Filters";

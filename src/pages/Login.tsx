@@ -65,7 +65,7 @@ function Login() {
       navigate("/");
       showSnackbar("LoggedIn successfully", "success");
     },
-    // onError:()=>{}
+    onError:()=> showSnackbar("Failed to login", "error")
   });
 
   return (
