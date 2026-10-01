@@ -1,44 +1,26 @@
 import Card from "./Card";
 import { useEffect, useMemo, useState } from "react";
-import {GET_PRODUCT} from "../../api/card";
+import { GET_PRODUCT } from "../../api/card";
 import { Product } from "../../utilities/types/productInterface";
-import { Snackbar } from "@mui/material";
+import { showSnackbar } from "../../api/snackbarNotifications";
 import Filters from "./Filters";
-
+import { useQuery } from "@tanstack/react-query";
 
 interface CardStateProps {
   search: string;
 }
 
 function CardState({ search }: Readonly<CardStateProps>) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [selectedAvailability, setSelectedAvailability] = useState<string>("All");
+  const [selectedAvailability, setSelectedAvailability] =
+    useState<string>("All");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
-  
-  
 
- useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-
-      const response = await GET_PRODUCT();
-
-      setProducts(response.data.products);
-    } catch (error) {
-      setError("Failed to get products");
-      setOpen(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
- void fetchProducts();
-}, []);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["products"],
+    queryFn: GET_PRODUCT,
+  });
+  const products: Product[] = data?.data?.products ?? [];
 
   const categories = [...new Set(products?.map((product) => product.category))];
   const availability = [
@@ -76,33 +58,16 @@ function CardState({ search }: Readonly<CardStateProps>) {
   }, [minPrice, maxPrice, products.length]);
 
   useEffect(() => {
-    if (error) {
-      setOpen(true);
+    if (isError) {
+      showSnackbar("Failed to get products", "error");
     }
-  }, [error]);
+  }, [isError]);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  if (loading) {
+  if (isPending) {
     return <p className="text-center">Loading... .please wait</p>;
   }
   return (
     <section className="mx-auto w-full max-w-337.5 p-5">
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={open}
-        autoHideDuration={4000}
-        onClose={handleClose}
-        message={error}
-        sx={{
-          "& .MuiSnackbarContent-root": {
-            backgroundColor: "#155dFc",
-          },
-        }}
-      />
-
       <div className="flex gap-8">
         <Filters
           categories={categories}
