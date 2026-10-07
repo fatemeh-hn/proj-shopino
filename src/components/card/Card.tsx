@@ -10,9 +10,9 @@ export function Card({ product }: Readonly<CardProps>) {
       : "text-green-500";
 
   return (
-    <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-transform duration-300 hover:scale-105">
+    <div className="flex w-64 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-transform duration-300 hover:scale-105 dark:border-gray-700 dark:bg-gray-800">
       {/* Image */}
-      <div className="relative flex h-52 items-center justify-center bg-gray-100 p-4">
+      <div className="relative flex h-52 items-center justify-center bg-gray-100 p-4 dark:bg-gray-700">
         <Link
           to={`/product/${product.id}`}
           className="flex h-full w-full items-center justify-center"
@@ -23,22 +23,31 @@ export function Card({ product }: Readonly<CardProps>) {
             className="h-full w-full object-contain"
           />
         </Link>
+
         {/* Heart */}
         <button
           type="button"
-          className=" absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm "
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm dark:bg-gray-800"
         >
-          <Heart className="h-4 w-4 text-gray-700" />
+          <Heart className="h-4 w-4 text-gray-700 dark:text-gray-200" />
         </button>
       </div>
+
       {/* Product Info */}
       <Link to={`/product/${product.id}`} className="flex flex-1 flex-col p-4">
-        <h2 className="text-base font-bold text-gray-900">{product.title}</h2>
-        <h3 className="mt-1 text-base text-gray-900"> ${product.price} </h3>
+        <h2 className="text-base font-bold text-gray-900 dark:text-white">
+          {product.title}
+        </h2>
+
+        <h3 className="mt-1 text-base text-gray-900 dark:text-gray-200">
+          ${product.price}
+        </h3>
+
         <p className={`mt-1 text-base font-bold ${stockColor}`}>
           {product.availabilityStatus}
         </p>
       </Link>
+
       {/* Button */}
       <div className="p-4 pt-0">
         <Button />

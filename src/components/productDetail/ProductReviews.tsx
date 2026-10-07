@@ -1,4 +1,3 @@
-import React from "react";
 import BackgroundLetterAvatars from "./Avatar";
 import { Box, Rating } from "@mui/material";
 import { Product } from "../../utilities/types/productInterface";
@@ -9,8 +8,8 @@ interface ProductInfoProps {
 
 function ProductReviews({ product }: Readonly<ProductInfoProps>) {
   return (
-    <div className="border border-gray-200 mt-6 mx-3 lg:mx-4 rounded-2xl">
-      <h1 className="m-3 sm:m-4 p-3 sm:p-4 font-bold text-lg sm:text-xl">
+    <div className="mx-3 mt-6 rounded-2xl border border-gray-200 bg-white lg:mx-4 dark:border-gray-700 dark:bg-gray-900">
+      <h1 className="m-3 p-3 text-lg font-bold text-gray-900 sm:m-4 sm:p-4 sm:text-xl dark:text-white">
         Customer Reviews
       </h1>
 
@@ -19,15 +18,18 @@ function ProductReviews({ product }: Readonly<ProductInfoProps>) {
           <div
             key={review.reviewerEmail}
             className="
+              mb-4
               flex
               gap-3
-              sm:gap-4
+              rounded-2xl
               border
               border-gray-200
-              rounded-2xl
+              bg-white
               p-3
+              sm:gap-4
               sm:p-4
-              mb-4
+              dark:border-gray-700
+              dark:bg-gray-800
             "
           >
             {/* Avatar */}
@@ -37,9 +39,11 @@ function ProductReviews({ product }: Readonly<ProductInfoProps>) {
 
             {/* Review Information */}
             <div className="min-w-0">
-              <p className="font-bold mb-2">{review.reviewerName}</p>
+              <p className="mb-2 font-bold text-gray-900 dark:text-white">
+                {review.reviewerName}
+              </p>
 
-              <p className="text-sm text-gray-500 mb-2">
+              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
                 {new Date(review.date).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -60,11 +64,20 @@ function ProductReviews({ product }: Readonly<ProductInfoProps>) {
                   value={review.rating}
                   readOnly
                   size="small"
+                  sx={{
+                    color: "#facc15",
+
+                    "@media (prefers-color-scheme: dark)": {
+                      color: "#facc15",
+                    },
+                  }}
                 />
               </Box>
 
               {/* Comment */}
-              <p className="mt-2 break-words">{review.comment}</p>
+              <p className="mt-2 break-words text-gray-800 dark:text-gray-200">
+                {review.comment}
+              </p>
             </div>
           </div>
         ))}

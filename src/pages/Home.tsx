@@ -6,13 +6,8 @@ function Home() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className=" bg-gray-100 ">
-      <main
-        className="
-          bg-white
-          shadow-sm
-        "
-      >
+    <div className="bg-gray-100 dark:bg-gray-950">
+      <main className="bg-white shadow-sm dark:bg-gray-900 dark:shadow-none">
         <Header search={search} setSearch={setSearch} />
 
         <CardState search={search} />

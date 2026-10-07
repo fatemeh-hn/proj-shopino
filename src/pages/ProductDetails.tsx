@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import {GET_PRODUCT_DETAIL} from "../api/cardDetails";
+import { GET_PRODUCT_DETAIL } from "../api/cardDetails";
 import { Product } from "../utilities/types/productInterface";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Header from "../components/card/Header";
@@ -39,40 +39,45 @@ function ProductDetails() {
   }, [id]);
 
   if (loading) {
-    return <p>Loading... please wait</p>;
+    return (
+      <p className="text-gray-900 dark:text-white">Loading... please wait</p>
+    );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="text-red-600 dark:text-red-400">{error}</p>;
   }
 
   if (!product) {
-    return <p>Product not found</p>;
+    return <p className="text-gray-900 dark:text-white">Product not found</p>;
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
       <Header showSearch={false} showLogin={false} showTheme={false} />
 
       {/* Breadcrumb */}
-      <div className="px-3 sm:px-5 lg:px-7 pt-4 lg:pt-5 overflow-hidden">
+      <div className="overflow-hidden px-3 pt-4 sm:px-5 lg:px-7 lg:pt-5">
         <Breadcrumbs
-          separator={<span className="text-xl sm:text-2xl">›</span>}
+          separator={
+            <span className="text-xl text-gray-500 dark:text-gray-400 sm:text-2xl">
+              ›
+            </span>
+          }
           aria-label="breadcrumb"
         >
           <Link
             to="/"
-            className="text-gray-700 hover:text-black font-bold shrink-0"
+            className="shrink-0 font-bold text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
           >
             Home
           </Link>
 
           <Typography
             sx={{
-              color: "#6a7282",
               fontWeight: 700,
             }}
-            className="truncate"
+            className="truncate text-gray-500 dark:text-gray-400"
           >
             {product.title}
           </Typography>

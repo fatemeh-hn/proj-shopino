@@ -37,18 +37,9 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserInputs>({ resolver: zodResolver(loginSchema) });
-
-  // const submitHandler: SubmitHandler<UserInputs> = async (data) => {
-  //   const res = await LOGIN_USER(data);
-  //   Cookies.set("token", res.data.accessToken, {
-  //     secure: true,
-  //     expires: 7,
-  //     samesite: "strict",
-  //   });
-  //   navigate("/");
-  //   showSnackbar("LoggedIn successfully" , "success")
-  // };
+  } = useForm<UserInputs>({
+    resolver: zodResolver(loginSchema),
+  });
 
   const submitHandler: SubmitHandler<UserInputs> = async (data) => {
     mutate(data);
@@ -56,26 +47,39 @@ function Login() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: UserInputs) => LOGIN_USER(data),
+
     onSuccess: (res) => {
       Cookies.set("token", res.data.accessToken, {
         secure: true,
         expires: 7,
         samesite: "strict",
       });
+
       navigate("/");
       showSnackbar("LoggedIn successfully", "success");
     },
-    onError:()=> showSnackbar("Failed to login", "error")
+
+    onError: () => {
+      showSnackbar("Failed to login", "error");
+    },
   });
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
+
+        // Light
         backgroundImage: "url('/login.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+
+        // Dark
+        ".dark &": {
+          backgroundImage: "none",
+          backgroundColor: "#111827",
+        },
       }}
     >
       <Box
@@ -84,6 +88,7 @@ function Login() {
 
           display: "flex",
           alignItems: "center",
+
           justifyContent: {
             xs: "center",
             sm: "center",
@@ -112,6 +117,7 @@ function Login() {
           },
         }}
       >
+        {/* Left Content */}
         <Box
           sx={{
             flexShrink: 0,
@@ -143,6 +149,7 @@ function Login() {
             },
           }}
         >
+          {/* Main Title */}
           <Typography
             variant="h3"
             sx={{
@@ -158,6 +165,10 @@ function Login() {
               },
 
               lineHeight: 1.2,
+
+              ".dark &": {
+                color: "#f9fafb",
+              },
             }}
           >
             Shop Smarter,
@@ -165,6 +176,7 @@ function Login() {
             Live Better
           </Typography>
 
+          {/* Description */}
           <Typography
             sx={{
               color: "#64748b",
@@ -177,12 +189,17 @@ function Login() {
               },
 
               lineHeight: 1.7,
+
+              ".dark &": {
+                color: "#d1d5db",
+              },
             }}
           >
             Login to access your orders, save your favorite items.
           </Typography>
         </Box>
 
+        {/* Login Card */}
         <Box
           component="form"
           onSubmit={handleSubmit(submitHandler)}
@@ -203,8 +220,8 @@ function Login() {
 
             boxSizing: "border-box",
 
+            // Light
             backgroundColor: "#FCFCFC",
-
             border: "1px solid #e2e8f0",
 
             borderRadius: "16px",
@@ -232,8 +249,20 @@ function Login() {
                 md: "0 15px 35px rgba(0,0,0,0.1)",
               },
             },
+
+            // Dark
+            ".dark &": {
+              backgroundColor: "#1f2937",
+              border: "1px solid #374151",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+
+              "&:hover": {
+                boxShadow: "0 15px 35px rgba(0,0,0,0.4)",
+              },
+            },
           }}
         >
+          {/* Logo */}
           <Box
             sx={{
               display: "flex",
@@ -241,6 +270,10 @@ function Login() {
               justifyContent: "center",
               gap: "12px",
               marginBottom: "16px",
+
+              ".dark &": {
+                color: "#fff",
+              },
             }}
           >
             <Handbag size={24} />
@@ -250,12 +283,17 @@ function Login() {
                 fontSize: "20px",
                 fontWeight: 700,
                 color: "#000",
+
+                ".dark &": {
+                  color: "#fff",
+                },
               }}
             >
               Shopio
             </Typography>
           </Box>
 
+          {/* Welcome */}
           <Typography
             variant="h4"
             sx={{
@@ -270,11 +308,16 @@ function Login() {
                 md: "30px",
                 lg: "32px",
               },
+
+              ".dark &": {
+                color: "#f9fafb",
+              },
             }}
           >
             Welcome back
           </Typography>
 
+          {/* Subtitle */}
           <Typography
             sx={{
               textAlign: "center",
@@ -287,11 +330,16 @@ function Login() {
                 md: "14px",
                 lg: "16px",
               },
+
+              ".dark &": {
+                color: "#d1d5db",
+              },
             }}
           >
             Login to your Shopio account
           </Typography>
 
+          {/* Username */}
           <TextField
             fullWidth
             required
@@ -301,8 +349,40 @@ function Login() {
             {...register("username")}
             helperText={errors.username?.message}
             error={!!errors.username}
+            sx={{
+              ".dark &": {
+                "& .MuiInputLabel-root": {
+                  color: "#9ca3af",
+                },
+
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#fff",
+                },
+
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+
+                  "& fieldset": {
+                    borderColor: "#4b5563",
+                  },
+
+                  "&:hover fieldset": {
+                    borderColor: "#6b7280",
+                  },
+
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#9ca3af",
+                  },
+                },
+
+                "& .MuiFormHelperText-root": {
+                  color: "#fca5a5",
+                },
+              },
+            }}
           />
 
+          {/* Password */}
           <TextField
             fullWidth
             required
@@ -312,6 +392,37 @@ function Login() {
             {...register("password")}
             helperText={errors.password?.message}
             error={!!errors.password}
+            sx={{
+              ".dark &": {
+                "& .MuiInputLabel-root": {
+                  color: "#9ca3af",
+                },
+
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#fff",
+                },
+
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+
+                  "& fieldset": {
+                    borderColor: "#4b5563",
+                  },
+
+                  "&:hover fieldset": {
+                    borderColor: "#6b7280",
+                  },
+
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#9ca3af",
+                  },
+                },
+
+                "& .MuiFormHelperText-root": {
+                  color: "#fca5a5",
+                },
+              },
+            }}
             slotProps={{
               input: {
                 endAdornment: (
@@ -327,7 +438,11 @@ function Login() {
                         alignItems: "center",
                       }}
                     >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      {showPassword ? (
+                        <EyeOff size={20} />
+                      ) : (
+                        <Eye size={20} />
+                      )}
                     </button>
                   </InputAdornment>
                 ),
@@ -335,12 +450,43 @@ function Login() {
             }}
           />
 
-          <FormControlLabel control={<Checkbox />} label="Remember me" />
+          {/* Remember Me */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{
+                  color: "#64748b",
 
+                  "&.Mui-checked": {
+                    color: "#2563eb",
+                  },
+
+                  ".dark &": {
+                    color: "#9ca3af",
+
+                    "&.Mui-checked": {
+                      color: "#60a5fa",
+                    },
+                  },
+                }}
+              />
+            }
+            label="Remember me"
+            sx={{
+              color: "#374151",
+
+              ".dark &": {
+                color: "#e5e7eb",
+              },
+            }}
+          />
+
+          {/* Login Button */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
+            disabled={isPending}
             sx={{
               marginTop: "15px",
               padding: "12px",
@@ -350,7 +496,7 @@ function Login() {
               gap: "4px",
             }}
           >
-            Login
+            {isPending ? "Logging in..." : "Login"}
             <MoveRight />
           </Button>
         </Box>

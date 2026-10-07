@@ -19,17 +19,19 @@ function CardState({ search }: Readonly<CardStateProps>) {
   const { data, isPending, isError } = useQuery({
     queryKey: ["products"],
     queryFn: GET_PRODUCT,
-    staleTime:1*60*1000
+    staleTime: 1 * 60 * 1000,
   });
+
   const products: Product[] = data?.data?.products ?? [];
 
-  const categories = [...new Set(products?.map((product) => product.category))];
+  const categories = [...new Set(products.map((product) => product.category))];
+
   const availability = [
-    ...new Set(products?.map((product) => product.availabilityStatus)),
+    ...new Set(products.map((product) => product.availabilityStatus)),
   ];
 
   const filteredData = useMemo(() => {
-    return products?.filter(
+    return products.filter(
       (product) =>
         (selectedCategory === "All" || product.category === selectedCategory) &&
         (selectedAvailability === "All" ||
@@ -65,10 +67,15 @@ function CardState({ search }: Readonly<CardStateProps>) {
   }, [isError]);
 
   if (isPending) {
-    return <p className="text-center">Loading... .please wait</p>;
+    return (
+      <p className="text-center text-gray-900 dark:text-gray-100">
+        Loading... please wait
+      </p>
+    );
   }
+
   return (
-    <section className="mx-auto w-full max-w-337.5 p-5">
+    <section className="mx-auto w-full max-w-337.5 bg-white p-5 dark:bg-gray-900">
       <div className="flex gap-8">
         <Filters
           categories={categories}
@@ -85,14 +92,20 @@ function CardState({ search }: Readonly<CardStateProps>) {
 
         <div className="flex-1">
           <div className="mb-5 flex items-center gap-2">
-            <h2 className="text-xl font-bold text-black">All Products</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              All Products
+            </h2>
 
-            <p className="text-sm text-gray-400">{products.length} items</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500">
+              {products.length} items
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-4">
-            {products?.length === 0 ? (
-              <p>No product added</p>
+            {products.length === 0 ? (
+              <p className="text-gray-900 dark:text-gray-100">
+                No product added
+              </p>
             ) : (
               filteredData.map((product) => (
                 <Card key={product.id} product={product} />

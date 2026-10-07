@@ -1,5 +1,5 @@
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 interface Props {
   name: string;
@@ -14,7 +14,7 @@ function stringToColor(string: string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -29,16 +29,16 @@ function stringAvatar(name: string) {
   return {
     sx: {
       bgcolor: stringToColor(name),
+      color: "#fff",
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
   };
 }
 
-export default function BackgroundLetterAvatars({name}:Readonly<Props>) {
+export default function BackgroundLetterAvatars({ name }: Readonly<Props>) {
   return (
     <Stack direction="row" spacing={2}>
       <Avatar {...stringAvatar(name)} />
-
     </Stack>
   );
 }

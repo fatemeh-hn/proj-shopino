@@ -6,7 +6,7 @@ import GlobalSnackbar from "./components/card/GlobalSnackbar";
 import ProtectedRoute from "./utilities/HelperFunctions/protectedRoutes";
 import Profile from "./pages/Profile";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ThemeProvider from "./context/ThemeContext";
+import {ThemeProvider} from "./context/ThemeContext";
 
 const queryClient = new QueryClient();
 function App() {
