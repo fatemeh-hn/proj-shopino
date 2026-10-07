@@ -27,7 +27,7 @@ function Profile() {
   }
 
   if (isError && !profile) {
-    return <p>unable to load your profile.</p>;
+    return <p>unable to load your profile.</p>; 
   }
 
   return <div>Profile</div>;

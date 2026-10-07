@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
-import { memo } from "react";
+import { useContext, memo } from "react";
+import { ThemeContext, useTheme } from "../../context/ThemeContext";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -58,12 +59,19 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-interface Theme {
-  theme: "light" | "dark";
-  onThemeChange: () => void;
+function memoCustomizedSwitches() {
+  const context = useTheme();
+
+  if (!context) {
+  throw new Error("ThemeContext must be used inside ThemeProvider");
 }
 
-function memoCustomizedSwitches({ theme, onThemeChange }: Readonly<Theme>) {
+  const { theme, setTheme } = context;
+
+  const onThemeChange = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
     <MaterialUISwitch
       sx={{
