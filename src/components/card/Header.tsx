@@ -1,6 +1,7 @@
 import { Handbag, Search, ShoppingCart } from "lucide-react";
 import Theme from "./Theme";
 import { Link } from "react-router";
+import { useShoppingCart } from "../../store/shoppingCartStore";
 
 
 interface Props {
@@ -18,7 +19,8 @@ function Header({
   showLogin = true,
   showTheme = true,
 }: Readonly<Props>) {
-  
+  const cart = useShoppingCart((state)=>(state.cart));
+  console.log(cart);
   return (
     <header className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div
@@ -107,7 +109,7 @@ function Header({
                 text-white
               "
             >
-              3
+              {cart.length}
             </span>
           </button>
 

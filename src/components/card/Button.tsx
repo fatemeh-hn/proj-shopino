@@ -11,7 +11,6 @@ export function Button({ product }: Readonly<ButtonProps>) {
 
   const onAddClick = () => {
     addToShoppingCart(product);
-    console.log(product);
   };
 
   return (
