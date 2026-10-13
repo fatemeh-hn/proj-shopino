@@ -2,6 +2,7 @@ import { Handbag, Search, ShoppingCart } from "lucide-react";
 import Theme from "./Theme";
 import { Link } from "react-router";
 
+
 interface Props {
   search?: string;
   setSearch?: React.Dispatch<React.SetStateAction<string>>;
@@ -17,6 +18,7 @@ function Header({
   showLogin = true,
   showTheme = true,
 }: Readonly<Props>) {
+  
   return (
     <header className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div
@@ -85,6 +87,7 @@ function Header({
           <button
             type="button"
             className="relative p-2 text-gray-900 dark:text-gray-100"
+            
           >
             <ShoppingCart className="h-6 w-6" />
 

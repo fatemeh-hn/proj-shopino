@@ -50,7 +50,7 @@ export function Card({ product }: Readonly<CardProps>) {
 
       {/* Button */}
       <div className="p-4 pt-0">
-        <Button />
+        <Button product={product} />
       </div>
     </div>
   );
