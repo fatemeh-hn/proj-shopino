@@ -2,7 +2,11 @@ import { Handbag, Search, ShoppingCart } from "lucide-react";
 import Theme from "./Theme";
 import { Link } from "react-router";
 import { useShoppingCart } from "../../store/shoppingCartStore";
-
+import { useState } from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Product } from "../../utilities/types/productInterface";
+import CartItems from "./CartItems";
 
 interface Props {
   search?: string;
@@ -19,8 +23,16 @@ function Header({
   showLogin = true,
   showTheme = true,
 }: Readonly<Props>) {
-  const cart = useShoppingCart((state)=>(state.cart));
-  console.log(cart);
+  const cart = useShoppingCart((state) => state.cart);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <header className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div
@@ -89,7 +101,7 @@ function Header({
           <button
             type="button"
             className="relative p-2 text-gray-900 dark:text-gray-100"
-            
+            onClick={handleClick}
           >
             <ShoppingCart className="h-6 w-6" />
 
@@ -112,6 +124,44 @@ function Header({
               {cart.length}
             </span>
           </button>
+
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            slotProps={{
+              paper: {
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "&::before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            {cart.map((item : Product) => (
+              <MenuItem onClick={handleClose} key={item.id} className="flex items-center">
+                <CartItems item={item} />
+              </MenuItem>
+            ))}
+          </Menu>
 
           {showLogin && (
             <Link
