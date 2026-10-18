@@ -157,15 +157,17 @@ function Header({
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            {cart.map((item: Product, index) => (
-              <div key={item.id}>
-                <MenuItem onClick={handleClose}>
-                  <CartItems item={item} />
-                </MenuItem>
+            <div className="max-h-100 overflow-y-auto">
+              {cart.map((item: Product, index) => (
+                <div key={item.id}>
+                  <MenuItem onClick={handleClose}>
+                    <CartItems item={item} />
+                  </MenuItem>
 
-                {index < cart.length - 1 && <Divider />}
-              </div>
-            ))}
+                  {index < cart.length - 1 && <Divider />}
+                </div>
+              ))}
+            </div>
           </Menu>
 
           {showLogin && (

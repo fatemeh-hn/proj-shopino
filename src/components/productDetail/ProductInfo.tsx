@@ -320,7 +320,7 @@ function ProductInfo({ product }: Readonly<ProductInfoProps>) {
 
           {/* Add To Cart */}
           <div className="w-80">
-            <Button />
+            <Button product={product} />
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export const useShoppingCart = create<CartStore>()(
             addToCart: (product) =>
                 set((state) => {
                     const alreadyExists = state.cart.some(
-                        (item) => item.id === product.id
+                        (item) => item?.id === product.id
                     );
 
                     if (alreadyExists) {

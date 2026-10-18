@@ -1,6 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { useShoppingCart } from "../../store/shoppingCartStore";
 import { Product } from "../../utilities/types/productInterface";
+import { showSnackbar } from "../../api/snackbarNotifications";
 
 interface ButtonProps {
   product: Product;
@@ -11,6 +12,7 @@ export function Button({ product }: Readonly<ButtonProps>) {
 
   const onAddClick = () => {
     addToShoppingCart(product);
+    showSnackbar("Product added to cart successfully", "success");
   };
 
   return (
