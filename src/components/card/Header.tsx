@@ -7,6 +7,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Product } from "../../utilities/types/productInterface";
 import CartItems from "./CartItems";
+import Divider from "@mui/material/Divider";
 
 interface Props {
   search?: string;
@@ -156,10 +157,14 @@ function Header({
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            {cart.map((item : Product) => (
-              <MenuItem onClick={handleClose} key={item.id} className="flex items-center">
-                <CartItems item={item} />
-              </MenuItem>
+            {cart.map((item: Product, index) => (
+              <div key={item.id}>
+                <MenuItem onClick={handleClose}>
+                  <CartItems item={item} />
+                </MenuItem>
+
+                {index < cart.length - 1 && <Divider />}
+              </div>
             ))}
           </Menu>
 
