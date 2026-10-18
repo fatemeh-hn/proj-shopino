@@ -12,7 +12,20 @@ export const useShoppingCart = create<CartStore>()(
     persist(
         (set) => ({
             cart: [],
-            addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
+            addToCart: (product) =>
+                set((state) => {
+                    const alreadyExists = state.cart.some(
+                        (item) => item.id === product.id
+                    );
+
+                    if (alreadyExists) {
+                        return state;
+                    }
+
+                    return {
+                        cart: [...state.cart, product],
+                    };
+                }),
             removeFromCart: (id) => set((state) => ({ cart: state.cart.filter((item) => item.id !== id) })),
         }),
         { name: 'cart' },
