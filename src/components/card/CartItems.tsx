@@ -36,7 +36,7 @@ function CartItems({ item }: Readonly<CartItemsProps>) {
         </Typography>
 
         
-         <div className="mt-2 w-[120px]">
+         <div className="mt-2 w-30" onClick={(e) => e.stopPropagation()}>
           <NumberSpinner
             defaultValue={1}
             min={1}
