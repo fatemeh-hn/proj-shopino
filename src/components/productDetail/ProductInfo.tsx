@@ -13,12 +13,16 @@ import StarIcon from "@mui/icons-material/Star";
 import { Product } from "../../utilities/types/productInterface";
 import { Button } from "../card/Button";
 import NumberSpinner from "./NumberSpinner";
+import { useShoppingCart } from "../../store/shoppingCartStore";
 
 interface ProductInfoProps {
   product: Product;
 }
 
 function ProductInfo({ product }: Readonly<ProductInfoProps>) {
+  const cart = useShoppingCart(state=>state.cart);
+  const productCount = cart.find(item=>item.id === product.id)?.count;
+  
   return (
     <div className="flex w-full flex-col lg:flex-row">
       {/* Product Image */}
@@ -315,7 +319,7 @@ function ProductInfo({ product }: Readonly<ProductInfoProps>) {
               },
             }}
           >
-            <NumberSpinner size="small" defaultValue={1} />
+            <NumberSpinner size="small" defaultValue={productCount??1} product={product} />
           </Box>
 
           {/* Add To Cart */}

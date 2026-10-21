@@ -9,17 +9,18 @@ interface CartItemsProps {
 }
 
 function CartItems({ item }: Readonly<CartItemsProps>) {
-  const deleteCartItem = useShoppingCart((state)=>(state.removeFromCart)); 
+  const deleteCartItem = useShoppingCart((state) => state.removeFromCart);
+  const cart = useShoppingCart((state) => state.cart);
+  const productCount = cart.find((product) => product.id === item.id)?.count;
+
   return (
     <div className="flex w-full items-center gap-3 px-1 py-1">
-      
       <img
         src={item.images[0]}
         alt={item.title}
         className="h-25 w-25 shrink-0 rounded-md object-cover bg-mauve-200"
       />
 
-      
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <Typography
           variant="body1"
@@ -28,25 +29,20 @@ function CartItems({ item }: Readonly<CartItemsProps>) {
           {item.title}
         </Typography>
 
-        <Typography
-          variant="body2"
-          className="font-medium text-gray-700"
-        >
+        <Typography variant="body2" className="font-medium text-gray-700">
           ${item.price.toFixed(2)}
         </Typography>
 
-        
-         <div className="mt-2 w-30" onClick={(e) => e.stopPropagation()}>
+        <div className="mt-2 w-30" onClick={(e) => e.stopPropagation()}>
           <NumberSpinner
-            defaultValue={1}
+            product={item}
+            defaultValue={productCount}
             min={1}
             size="small"
           />
         </div>
-      
       </div>
 
-      
       <button
         type="button"
         className="shrink-0 text-gray-400 transition hover:text-red-500"

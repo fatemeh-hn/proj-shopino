@@ -15,6 +15,7 @@ export interface Product {
   shippingInformation: string;
   reviews:Reviews[];
   discountPercentage:number;
+  count?:number
 }
 
 

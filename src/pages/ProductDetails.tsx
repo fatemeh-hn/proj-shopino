@@ -7,12 +7,14 @@ import Header from "../components/card/Header";
 import ProductInfo from "../components/productDetail/ProductInfo";
 import ProductReviews from "../components/productDetail/ProductReviews";
 
+
 function ProductDetails() {
   const { id } = useParams();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  
 
   useEffect(() => {
     const fetchProduct = async () => {

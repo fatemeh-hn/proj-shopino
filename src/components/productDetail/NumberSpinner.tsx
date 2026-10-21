@@ -8,18 +8,35 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import { useShoppingCart } from "../../store/shoppingCartStore";
+import { Product } from "../../utilities/types/productInterface";
+
 
 export default function NumberSpinner({
   id: idProp,
   label,
   error,
   size = "medium",
-  ...other
+  product,
+  ...other 
 }: BaseNumberField.Root.Props & {
   label?: React.ReactNode;
   size?: "small" | "medium";
   error?: boolean;
+  product:Product
 }) {
+
+  const {addToCart , decreaseCount} = useShoppingCart();
+  
+  const onAddClick = () => {
+    addToCart(product);
+  };
+
+  const onDecreaseClick = ()=>{
+    decreaseCount(product.id);
+  }
+
+  
   let id = React.useId();
 
   if (idProp) {
@@ -115,6 +132,7 @@ export default function NumberSpinner({
               variant="outlined"
               aria-label="Decrease"
               size={size}
+              onClick={onDecreaseClick}
               sx={{
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
@@ -203,6 +221,7 @@ export default function NumberSpinner({
               variant="outlined"
               aria-label="Increase"
               size={size}
+              onClick={onAddClick}
               sx={{
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
