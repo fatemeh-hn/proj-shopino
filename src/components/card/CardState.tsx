@@ -4,7 +4,7 @@ import { GET_PRODUCT } from "../../api/cardProducts";
 import { Product } from "../../utilities/types/productInterface";
 import { showSnackbar } from "../../api/snackbarNotifications";
 import Filters from "./Filters";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface CardStateProps {
   search: string;
@@ -16,13 +16,26 @@ function CardState({ search }: Readonly<CardStateProps>) {
     useState<string>("All");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
 
-  const { data, isPending, isError } = useQuery({
+  const {
+    data,
+    isPending,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["products"],
     queryFn: GET_PRODUCT,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      const nextSkip = lastPage.skip + lastPage.limit;
+
+      return nextSkip < lastPage.total ? nextSkip : undefined;
+    },
     staleTime: 1 * 60 * 1000,
   });
 
-  const products: Product[] = data?.data?.products ?? [];
+  const products = data?.pages.flatMap((page) => page.products) ?? [];
 
   const categories = [...new Set(products.map((product) => product.category))];
 
