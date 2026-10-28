@@ -1,10 +1,12 @@
 import Card from "./Card";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GET_PRODUCT } from "../../api/cardProducts";
 import { Product } from "../../utilities/types/productInterface";
 import { showSnackbar } from "../../api/snackbarNotifications";
 import Filters from "./Filters";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
+import SkeletonBox from "./Skeleton";
 
 interface CardStateProps {
   search: string;
@@ -32,8 +34,32 @@ function CardState({ search }: Readonly<CardStateProps>) {
 
       return nextSkip < lastPage.total ? nextSkip : undefined;
     },
-    staleTime: 1 * 60 * 1000,
+    // staleTime: 1 * 60 * 1000,
   });
+
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+      },
+    );
+
+    const element = loadMoreRef.current;
+
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const products = data?.pages.flatMap((page) => page.products) ?? [];
 
@@ -79,13 +105,13 @@ function CardState({ search }: Readonly<CardStateProps>) {
     }
   }, [isError]);
 
-  if (isPending) {
-    return (
-      <p className="text-center text-gray-900 dark:text-gray-100">
-        Loading... please wait
-      </p>
-    );
-  }
+  // if (isPending) {
+  //   return (
+  //     <div className="grid grid-cols-3 gap-4">
+  //       <Skeleton className="h-[429.4px] w-64 rounded-xl "/>
+  //     </div>
+  //   );
+  // }
 
   return (
     <section className="mx-auto w-full max-w-337.5 bg-white p-5 dark:bg-gray-900">
@@ -114,8 +140,10 @@ function CardState({ search }: Readonly<CardStateProps>) {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4">
-            {products.length === 0 ? (
+          <div className="grid grid-cols-3 gap-4">
+            {products.length === 0 && isPending ? (
+                <SkeletonBox className="!h-[429px] w-64 rounded-xl " count={9} />
+            ) : products.length === 0 ? (
               <p className="text-gray-900 dark:text-gray-100">
                 No product added
               </p>
@@ -125,6 +153,12 @@ function CardState({ search }: Readonly<CardStateProps>) {
               ))
             )}
           </div>
+          <div ref={loadMoreRef} className="h-10" />
+          {isFetchingNextPage && (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress aria-label="Loading…" />
+            </Box>
+          )}
         </div>
       </div>
     </section>

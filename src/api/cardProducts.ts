@@ -1,7 +1,7 @@
 import { productAxios } from "./interceptor";
 
 export const GET_PRODUCT = async ({ pageParam = 0 }) => {
-    const response = await productAxios.get(`products?limit=30&skip=${pageParam}`,
+    const response = await productAxios.get(`products?limit=9&skip=${pageParam}`,
         { withCredentials: true }
     );
 
